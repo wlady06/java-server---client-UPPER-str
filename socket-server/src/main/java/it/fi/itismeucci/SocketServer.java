@@ -4,29 +4,23 @@ import java.io.*;
 import java.net.*;
 
 public class SocketServer {
-    private ServerSocket server;
-    private Socket client;
-    private String recv;
-    private String modifiedRecv;
-    private BufferedReader in;
-    private DataOutputStream out;
 
-    public Socket listen() throws IOException
-    {
-        this.server = new ServerSocket(3390);
-        this.client = server.accept();
-        this.server.close();
-        this.in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        this.out = new DataOutputStream(client.getOutputStream());
-        return client;
+    public Socket avvia() throws IOException {
+        ServerSocket server = new ServerSocket(34567);
+        for (;;) {
+            Socket client = server.accept();
+            communicate(client);
+        }
     }
 
-    public void communicate() throws IOException
-    {
-        this.recv = in.readLine();
-        System.out.print("Stringa ricevuta: " + this.recv);
-        this.modifiedRecv = this.recv.toUpperCase();
-        out.writeBytes(this.modifiedRecv + '\n');
-        this.client.close();
+    void communicate(Socket client) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        DataOutputStream out = new DataOutputStream(client.getOutputStream());
+        String recv = in.readLine();
+        System.out.print("Stringa ricevuta: " + recv);
+        String modifiedRecv = recv.toUpperCase();
+        out.writeBytes(modifiedRecv + '\n');
+        client.close();
+
     }
 }
