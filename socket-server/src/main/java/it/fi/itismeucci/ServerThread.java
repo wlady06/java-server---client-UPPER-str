@@ -25,7 +25,7 @@ public class ServerThread extends Thread{
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            System.out.println("ciao");
+            
         }
     }
     public void communicate() throws IOException {
@@ -40,7 +40,7 @@ public class ServerThread extends Thread{
             if(recv.toUpperCase().equals("SPEGNI"))
             {
 
-                m.closeClient(server);
+                m.closeClients(server);
                 return ;
             }
             System.out.println(recv);
@@ -50,6 +50,10 @@ public class ServerThread extends Thread{
 
         }
         client.close();
+
+    }
+    public void closeClient() throws IOException{
+        this.client.close();
 
     }
 }

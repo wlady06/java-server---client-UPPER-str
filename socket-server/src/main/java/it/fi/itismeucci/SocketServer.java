@@ -7,15 +7,15 @@ import java.net.Socket;
 public class SocketServer  {
     public Socket avvia() throws IOException {
         ServerSocket server = new ServerSocket(34567);
-        ManagementServerThread m = new ManagementServerThread(server);
+        ManagementServerThread m = new ManagementServerThread();
 
         for (;;) {
             Socket client = server.accept();
-            m.addClient(client);
-            ServerThread t = new ServerThread(client, m,server);
+            
+            ServerThread threadServer = new ServerThread(client, m, server);
+            m.addThread(threadServer);
            
-           
-            t.start();   
+            threadServer.start();   
         }
     }
 

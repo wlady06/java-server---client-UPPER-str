@@ -23,7 +23,9 @@ public class SocketClient
     
     public void send() throws IOException
     {
-        while (true)
+        try{
+
+            while (true)
         {
             System.out.print("Inserisci la stringa da trasmettere al server" + '\n');
             this.userString = this.keyboard.next();
@@ -46,5 +48,10 @@ public class SocketClient
         }
         
         socket.close();
+        }
+        catch(Exception e){
+            socket.close();
+        }
+        
     }
 }

@@ -8,19 +8,18 @@ import java.util.ArrayList;
 
 public class ManagementServerThread extends Thread
 {
-    ArrayList<Socket> clientsArray = new ArrayList<Socket>();
-    public ServerSocket server;
-    public ManagementServerThread (ServerSocket server) { this.server = server;}
-    public void addClient(Socket client)
+    ArrayList<ServerThread> clientsArray = new ArrayList<ServerThread>();
+    
+    public ManagementServerThread () { }
+    public void addThread(ServerThread thread)
     {
-        clientsArray.add(client);
+        clientsArray.add(thread);
     }
-    public void closeClient(ServerSocket server) throws IOException
+    public void closeClients(ServerSocket server) throws IOException
     {
-        for (Socket clients : clientsArray) {
-            DataOutputStream out = new DataOutputStream(clients.getOutputStream());
-            out.writeBytes("morto" + '\n');
-            clients.close();
+        for (ServerThread thread : clientsArray) {
+            
+            thread.closeClient();
             System.out.println("chiuso");
 
         }
