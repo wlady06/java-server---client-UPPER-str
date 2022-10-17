@@ -32,10 +32,15 @@ public class SocketClient
             {
                 break;
             }
+
             else{
                 out.writeBytes(userString + '\n');
                 serverString = in.readLine();
                 System.out.println("Risposta dal server: " + '\n' + serverString);
+            }
+            if(serverString.toUpperCase().equals("MORTO"))
+            {
+                break;
             }
             
         }
