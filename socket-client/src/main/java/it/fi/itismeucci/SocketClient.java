@@ -17,16 +17,29 @@ public class SocketClient
         this.socket = new Socket(InetAddress.getLocalHost(), 34567);
         this.in = new DataInputStream(socket.getInputStream());
         this.out = new DataOutputStream(socket.getOutputStream());
+        this.userString = "";
         return socket;
     }
     
     public void send() throws IOException
     {
-        System.out.print("Inserisci la stringa da trasmettere al server" + '\n');
-        this.userString = this.keyboard.next();
-        out.writeBytes(userString + '\n');
-        serverString = in.readLine();
-        System.out.print("Risposta dal server: " + '\n' + serverString);
+        while (true)
+        {
+            System.out.print("Inserisci la stringa da trasmettere al server" + '\n');
+            this.userString = this.keyboard.next();
+            
+            if(userString.toUpperCase().equals("FINE"))
+            {
+                break;
+            }
+            else{
+                out.writeBytes(userString + '\n');
+                serverString = in.readLine();
+                System.out.println("Risposta dal server: " + '\n' + serverString);
+            }
+            
+        }
+        
         socket.close();
     }
 }
